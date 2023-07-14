@@ -7,12 +7,12 @@ import { getAllCollectionsFromCatalog, getDeployedContracts, getNftInCollection}
 
 const router = express.Router();
 
-router.get('/get', async function ({ body, user }: any, res: Response, next: any) {
-    //const p = await getAllCollectionsFromCatalog()
-   // const l = await getDeployedContracts("0x7c8995e83c4b1843")
-   const m = await getNftInCollection()
-    return res.status(200).send(m);
-})
+// router.get('/get', async function ({ body, user }: any, res: Response, next: any) {
+//     //const p = await getAllCollectionsFromCatalog()
+//    // const l = await getDeployedContracts("0x7c8995e83c4b1843")
+//    const m = await getNftInCollection()
+//     return res.status(200).send(m);
+// })
 
 router.post('/create', async function ({ body, user }: any, res: Response, next: any) {
     try {
