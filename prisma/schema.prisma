@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                    String   @id @default(uuid())
+  name                  String?
+  userName              String?  @unique @map("user_name")
+  email                 String   @unique
+  issuer                String   @unique
+  accountAddress        String   @unique @map("account_address")
+  parentAddress         String?  @map("parent_address")
+  parentWalletConnected Boolean? @default(false) @map("parent_wallet_connected")
+  mobile                String?
+  pic                   String?
+  metadata              Json?
+  form                  Form[]
+  lastLoginAt           Int      @map("last_login_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([accountAddress])
+  @@index([email])
+}
+
+model Form {
+  id                           String      @id
+  description                  String?
+  isCaptchaEnabled             Boolean     @default(false) @map("is_captcha_enabled")
+  isEmailCopyOfResponseEnabled Boolean     @default(false) @map("is_email_copy_of_response_enabled")
+  themeId                      String      @unique @map("theme_id")
+  isPublished                  Boolean     @default(false) @map("is_published")
+  Theme                        Theme?
+  feilds                       FormField[]
+  account                      Account     @relation(fields: [accountAddress], references: [accountAddress], onDelete: Cascade)
+  accountAddress               String      @map("account_address")
+  metadata                     Json?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+model Theme {
+  id              String         @id
+  logoUrl         String         @map("logo_url")
+  backgroundColor String         @map("background_color")
+  backgroundUrl   String?        @map("background_url")
+  backgroundType  BackgroundType @map("background_type")
+  font            String
+
+  form   Form   @relation(fields: [formId], references: [id], onDelete: Cascade)
+  formId String @unique @map("form_id")
+}
+
+model FormField {
+  id          String             @id
+  required    Boolean            @default(false)
+  title       String
+  type        FieldType
+  description String?
+  fieldOrder  Int                @map("field_order")
+  properties  FormFeildProperty?
+
+  form   Form   @relation(fields: [formId], references: [id], onDelete: Cascade)
+  formId String @map("form_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+enum FieldType {
+  ShortText       @map("short_text")
+  LongText        @map("long_text")
+  Number          @map("number")
+  Rating          @map("rating")
+  MultipleChoice  @map("multiple_choice")
+  FlowAddress     @map("flow_address")
+  TwitterAccount  @map("twitter_account")
+  Upload          @map("upload")
+  Date            @map("date")
+  PhysicalAddress @map("physical_address")
+}
+
+model Choice {
+  id                  String            @id
+  label               String
+  formFieldPropertyId String            @map("form_field_property_id")
+  formFieldProperty   FormFeildProperty @relation(fields: [formFieldPropertyId], references: [id], onDelete: Cascade)
+}
+
+enum BackgroundType {
+  Gradient @map("gradient")
+  Image    @map("image")
+}
+
+model FormFeildProperty {
+  id              String   @id
+  placeholderText String?  @map("placeholder_text")
+  verifySignature Boolean? @map("verify_signature")
+
+  // Multichoice Feild Property
+  choices           Choice[]
+  allowOtherChoice  Boolean? @map("allow_other_choice")
+  maxSelectionCount Int?     @map("max_selection_count")
+  minSelectionCount Int?     @map("min_selection_count")
+
+  // Rating Feild Property
+  max        Int?
+  min        Int?
+  endLabel   String? @map("end_label")
+  startLabel String? @map("start_label")
+
+  // Number Feild Property
+  numberType NumberType? @map("number_type")
+
+  // Media Embedding Feild Property
+  validations ShortTextValidation[] @default([]) @map("short_text_validation")
+
+  formFeild   FormField @relation(fields: [formFeildId], references: [id], onDelete: Cascade)
+  formFeildId String    @unique @map("form_feild_id")
+}
+
+enum NumberType {
+  INTEGER @map("integer")
+  FLOAT   @map("float")
+}
+
+enum ShortTextValidation {
+  URL   @map("url")
+  EMAIL @map("email")
+}
