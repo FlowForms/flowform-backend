@@ -9,6 +9,29 @@ export class FormDB {
     this.prisma = prisma;
   }
 
+  private prepareData(form: any) {
+    delete form["createdAt"]
+    delete form["updatedAt"]
+    delete form["accountAddress"]
+
+    form.feilds = form.feilds.map((f:any) => {
+      delete f["createdAt"]
+      delete f["updatedAt"]
+      delete f["formId"]
+
+      delete f["properties"]["formFeildId"]
+      if(f["properties"]["choices"]) {
+        f["properties"]["choices"] = f["properties"]["choices"].map((c:any) => {
+          delete c["formFieldPropertyId"]
+          return c
+        })
+      }
+
+      return f
+    })
+    return form
+  }
+
   async getAll(accountAddress: string) {
     return this.prisma.form.findMany({
         where: {
@@ -18,7 +41,7 @@ export class FormDB {
   }
 
   async get(id: string) {
-    return this.prisma.form.findUnique({
+    const form = await this.prisma.form.findUnique({
         where: {
             id: id
         }, 
@@ -31,9 +54,12 @@ export class FormDB {
                         }
                     }
                 }
-            } 
+            }, 
+            response: true 
         }
     })
+
+    return this.prepareData(form)
   }
 
   async create(accountAddress: string, data: Form) {
@@ -62,26 +88,12 @@ export class FormDB {
     return form;
   }
 
-//   async update(email: string, arg: updateAccountArgs) {
-//     const account = await this.prisma.account.update({
-//       where: {
-//         email: email,
-//       },
-//       data: { ...arg },
-//     });
-
-//     return account;
-//   }
-
-//   async upsert(email: string, issuer: string, accountAddress: string, lastLoginAt: number, arg: updateAccountArgs) {
-//     const account = await this.prisma.account.upsert({
-//       where: {
-//         email: email,
-//       },
-//       update: { ...arg },
-//       create: { ...arg, email: email, issuer: issuer, accountAddress: accountAddress, lastLoginAt: lastLoginAt },
-//     });
-
-//     return account;
-//   }
+  async delete(id: string, accountAddress: string) {
+    await this.prisma.form.deleteMany({
+      where: {
+        id: id,
+        accountAddress: accountAddress
+      }
+    })
+  }
 }
