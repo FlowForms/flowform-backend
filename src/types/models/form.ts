@@ -51,6 +51,10 @@ export const formFeildSchema = Joi.object({
     properties: formFeildPropertySchema.optional()
 })
 
+export const getFormSchema = Joi.object({
+    id: Joi.string().required()
+});
+
 export const createFormSchema = Joi.object({
     form: formSchema.required(),
     feilds: Joi.array().items(formFeildSchema).required()
@@ -112,6 +116,10 @@ export type Choice = {
     readonly id: string;
     readonly label: string;
 }
+
+export type GetFormRequestBody = {
+    readonly id: string;
+};
 
 export type CreateFormRequestBody = {
     readonly form: Form;

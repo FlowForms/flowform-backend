@@ -15,10 +15,7 @@ passport.deserializeUser((user, done) => {
 });
 
 const strategy = new MagicStrategy(async function (user, done) {
-  console.log("Passport Magic Strategy")
-  console.log("He he check", user.issuer, user.publicAddress)
   const userMetadata = await magic.users.getMetadataByIssuer(user.issuer);
-  console.log("He he check 2", userMetadata)
   const existingUser = await db.account.getByIssuer(user.issuer);
 
   if (!existingUser) signup(user, userMetadata, done);
