@@ -1,14 +1,5 @@
 import Joi from 'joi';
-import { BackgroundType, FieldType, NumberType, ShortTextValidation } from '@prisma/client';
-
-export const themeSchema = Joi.object({
-    id: Joi.string().required(),
-    logoUrl: Joi.string().required(),
-    backgroundColor: Joi.string().required(),
-    backgroundUrl: Joi.string().optional(),
-    backgroundType: Joi.string().valid(...Object.values(BackgroundType)).required(),
-    font: Joi.string().required(),
-});
+import { FieldType, NumberType, ShortTextValidation } from '@prisma/client';
 
 export const formSchema = Joi.object({
     id: Joi.string().required(),
@@ -17,7 +8,8 @@ export const formSchema = Joi.object({
     isEmailCopyOfResponseEnabled: Joi.boolean().optional(),
     isPublished: Joi.boolean().optional(),
     metadata: Joi.object().optional(),
-    theme: themeSchema.required()
+    backgroundColor: Joi.string().optional(),
+    backgroundUrl: Joi.string().optional(),
 });
 
 export const choiceSchema = Joi.object({
@@ -61,7 +53,8 @@ export const createFormSchema = Joi.object({
 });
 
 export const updateFormSchema = Joi.object({
-    form: formSchema.optional(),
+    id: Joi.string().required(),
+    form: formSchema,
     feilds: Joi.array().items(formFeildSchema).optional()
 });
 
@@ -72,16 +65,8 @@ export type Form = {
     readonly isEmailCopyOfResponseEnabled?: boolean;
     readonly isPublished?: boolean;
     readonly metadata?: Record<string, Record<string, string>>;
-    readonly theme: Theme
-};
-
-export type Theme = {
-    readonly id: string;
-    readonly logoUrl: string;
-    readonly backgroundColor: string;
+    readonly backgroundColor?: string;
     readonly backgroundUrl?: string;
-    readonly backgroundType: BackgroundType;
-    readonly font: string;
 };
 
 export type FormField = {
@@ -127,7 +112,8 @@ export type CreateFormRequestBody = {
 };
 
 export type UpdateFormRequestBody = {
-    readonly form: Form;
-    readonly feilds: FormField[]
+    readonly id: string;
+    readonly form?: Form;
+    readonly feilds?: FormField[]
 };
 

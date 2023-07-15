@@ -42,9 +42,14 @@ router.post('/create', async function ({ body, user }: any, res: Response, next:
 
 router.post('/update', async function ({ body, user }: any, res: Response, next: any) {
     try {
-        const { form:formData, feilds }: UpdateFormRequestBody = validatePayload(body, updateFormSchema);
-        await db.feild.updateMany(formData.id, feilds)
-        const form = await db.form.get(formData.id)
+        const { id, form:formData, feilds }: UpdateFormRequestBody = validatePayload({
+            id: body.id,
+            form: {id: body.id, ...body.form },
+            feilds: body.feilds
+        }, updateFormSchema);
+        if(formData) await db.form.upsert(user.accountAddress, formData)
+        if(feilds) await db.feild.updateMany(id, feilds)
+        const form = await db.form.get(id)
         return res.status(200).send(form);
     } catch (err) {
         console.log(err);
