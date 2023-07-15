@@ -37,9 +37,9 @@ model Form {
   description                  String?
   isCaptchaEnabled             Boolean     @default(false) @map("is_captcha_enabled")
   isEmailCopyOfResponseEnabled Boolean     @default(false) @map("is_email_copy_of_response_enabled")
-  themeId                      String      @unique @map("theme_id")
   isPublished                  Boolean     @default(false) @map("is_published")
-  Theme                        Theme?
+  backgroundColor              String?     @map("background_color")
+  backgroundUrl                String?     @map("background_url")
   feilds                       FormField[]
   account                      Account     @relation(fields: [accountAddress], references: [accountAddress], onDelete: Cascade)
   accountAddress               String      @map("account_address")
@@ -47,18 +47,6 @@ model Form {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-}
-
-model Theme {
-  id              String         @id
-  logoUrl         String         @map("logo_url")
-  backgroundColor String         @map("background_color")
-  backgroundUrl   String?        @map("background_url")
-  backgroundType  BackgroundType @map("background_type")
-  font            String
-
-  form   Form   @relation(fields: [formId], references: [id], onDelete: Cascade)
-  formId String @unique @map("form_id")
 }
 
 model FormField {

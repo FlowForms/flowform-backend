@@ -37,17 +37,26 @@ export class FormDB {
   }
 
   async create(accountAddress: string, data: Form) {
-    const { theme, ...formData } = data;
-
     const form = await this.prisma.form.create({
        data: {
-        ...formData,
-        themeId: theme.id,
+        ...data,
         accountAddress: accountAddress,
-        Theme: {
-            create: theme
-        }
        }
+    });
+
+    return form;
+  }
+
+  async upsert(accountAddress: string, data: Form) {
+    const form = await this.prisma.form.upsert({
+      where: {
+        id: data.id
+      },
+      update: data,
+      create: {
+        ...data,
+        accountAddress: accountAddress,
+      }
     });
 
     return form;

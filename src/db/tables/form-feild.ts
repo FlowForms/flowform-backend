@@ -89,21 +89,16 @@ export class FormFeildDB {
 
   async updateMany(formId: string, args: FormField[]) {
     const { formFeildArgs, formFeildPropertiesArgs, choicePropertyArgs } = this.prepareFormData(formId, args);
-
-    const feildIds = formFeildArgs.map((feild) => feild.id);
-
+    
     await this.prisma.$transaction([
       this.prisma.formField.deleteMany({
         where: {
-          id: {
-            in: feildIds,
-          },
+          formId: formId
         },
       }),
       this.prisma.formField.createMany({
         data: formFeildArgs,
         skipDuplicates: true,
-
       }),
       this.prisma.formFeildProperty.createMany({
         data: formFeildPropertiesArgs,
