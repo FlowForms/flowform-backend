@@ -1,16 +1,18 @@
 import { PrismaClient } from '@prisma/client';
-import { AccountDB, FormDB, FormFeildDB } from './tables';
+import { AccountDB, FormDB, FormFeildDB, ResponseDB } from './tables';
 
 
 class DB {
   account: AccountDB;
   form: FormDB;
   feild: FormFeildDB;
-  
+  response: ResponseDB;
+
   constructor(prisma: PrismaClient) {
     this.account = new AccountDB(prisma);
     this.form = new FormDB(prisma);
     this.feild = new FormFeildDB(prisma);
+    this.response = new ResponseDB(prisma);
   }
 }
 

@@ -40,6 +40,8 @@ model Form {
   isPublished                  Boolean     @default(false) @map("is_published")
   backgroundColor              String?     @map("background_color")
   backgroundUrl                String?     @map("background_url")
+  accessGate                   AccessGate? @map("access_gate")
+  response                     Response[]
   feilds                       FormField[]
   account                      Account     @relation(fields: [accountAddress], references: [accountAddress], onDelete: Cascade)
   accountAddress               String      @map("account_address")
@@ -47,6 +49,22 @@ model Form {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+model Response {
+  id        String   @id @default(uuid())
+  data      Json
+  Form      Form     @relation(fields: [formId], references: [id])
+  formId    String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+enum AccessGate {
+  NFT               @map("nft")
+  TWITTER           @map("twitter")
+  DEPLOYED_CONTRACT @map("deployed_contract")
+  FIND_PROFILE      @map("find_profile")
 }
 
 model FormField {

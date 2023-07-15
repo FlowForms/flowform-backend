@@ -1,15 +1,16 @@
 import Joi from 'joi';
-import { FieldType, NumberType, ShortTextValidation } from '@prisma/client';
+import { AccessGate, FieldType, NumberType, ShortTextValidation } from '@prisma/client';
 
 export const formSchema = Joi.object({
     id: Joi.string().required(),
-    description: Joi.string().optional(),
-    isCaptchaEnabled: Joi.boolean().optional(),
-    isEmailCopyOfResponseEnabled: Joi.boolean().optional(),
-    isPublished: Joi.boolean().optional(),
-    metadata: Joi.object().optional(),
-    backgroundColor: Joi.string().optional(),
-    backgroundUrl: Joi.string().optional(),
+    description: Joi.string().optional().allow(null),
+    isCaptchaEnabled: Joi.boolean().optional().allow(null),
+    isEmailCopyOfResponseEnabled: Joi.boolean().optional().allow(null),
+    isPublished: Joi.boolean().optional().allow(null),
+    metadata: Joi.object().optional().allow(null),
+    backgroundColor: Joi.string().optional().allow(null),
+    backgroundUrl: Joi.string().optional().allow(null),
+    accessGate: Joi.string().valid(...Object.values(AccessGate)).optional().allow(null),
 });
 
 export const choiceSchema = Joi.object({
@@ -19,18 +20,18 @@ export const choiceSchema = Joi.object({
 
 export const formFeildPropertySchema = Joi.object({
     id: Joi.string().required(),
-    placeholderText: Joi.string().optional(),
-    verifySignature: Joi.boolean().optional(),
-    choices: Joi.array().items(choiceSchema).optional(),
-    allowOtherChoice: Joi.boolean().optional(),
-    maxSelectionCount: Joi.number().optional(),
-    minSelectionCount: Joi.number().optional(),
-    max: Joi.number().optional(),
-    min: Joi.number().optional(),
-    endLabel: Joi.string().optional(),
-    startLabel: Joi.string().optional(),
-    numberType: Joi.string().valid(...Object.values(NumberType)).optional(),
-    validations: Joi.array().items(...Object.values(ShortTextValidation)).optional(),
+    placeholderText: Joi.string().optional().allow(null),
+    verifySignature: Joi.boolean().optional().allow(null),
+    choices: Joi.array().items(choiceSchema).optional().allow(null),
+    allowOtherChoice: Joi.boolean().optional().allow(null),
+    maxSelectionCount: Joi.number().optional().allow(null),
+    minSelectionCount: Joi.number().optional().allow(null),
+    max: Joi.number().optional().allow(null),
+    min: Joi.number().optional().allow(null),
+    endLabel: Joi.string().optional().allow(null),
+    startLabel: Joi.string().optional().allow(null),
+    numberType: Joi.string().valid(...Object.values(NumberType)).optional().allow(null),
+    validations: Joi.array().items(...Object.values(ShortTextValidation)).optional().allow(null),
 })
 
 export const formFeildSchema = Joi.object({
@@ -38,9 +39,9 @@ export const formFeildSchema = Joi.object({
     required: Joi.boolean().required(),
     title: Joi.string().required(),
     type: Joi.string().valid(...Object.values(FieldType)).required(),
-    description: Joi.string().optional(),
+    description: Joi.string().optional().allow(null),
     fieldOrder: Joi.number().required(),
-    properties: formFeildPropertySchema.optional()
+    properties: formFeildPropertySchema.optional().allow(null)
 })
 
 export const getFormSchema = Joi.object({
@@ -55,7 +56,7 @@ export const createFormSchema = Joi.object({
 export const updateFormSchema = Joi.object({
     id: Joi.string().required(),
     form: formSchema,
-    feilds: Joi.array().items(formFeildSchema).optional()
+    feilds: Joi.array().items(formFeildSchema).optional().allow(null)
 });
 
 export type Form = {
@@ -67,6 +68,7 @@ export type Form = {
     readonly metadata?: Record<string, Record<string, string>>;
     readonly backgroundColor?: string;
     readonly backgroundUrl?: string;
+    readonly accessGate?: AccessGate
 };
 
 export type FormField = {
@@ -110,6 +112,16 @@ export type CreateFormRequestBody = {
     readonly form: Form;
     readonly feilds: FormField[]
 };
+
+export type CreateResponseRequestBody = {
+    readonly formId: string;
+    readonly data: any;
+};
+
+export const createResponseSchema = Joi.object({
+    formId: Joi.string().required(),
+    data: Joi.object().required()
+});
 
 export type UpdateFormRequestBody = {
     readonly id: string;
