@@ -10,6 +10,7 @@ export class FormDB {
   }
 
   private prepareData(form: any) {
+    if(!form) return form
     delete form["createdAt"]
     delete form["updatedAt"]
     delete form["accountAddress"]
@@ -19,7 +20,7 @@ export class FormDB {
       delete f["updatedAt"]
       delete f["formId"]
 
-      delete f["properties"]["formFeildId"]
+      if(f["properties"]["formFeildId"]) delete f["properties"]["formFeildId"]
       if(f["properties"]["choices"]) {
         f["properties"]["choices"] = f["properties"]["choices"].map((c:any) => {
           delete c["formFieldPropertyId"]
