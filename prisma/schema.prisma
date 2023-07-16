@@ -54,7 +54,7 @@ model Form {
 model Response {
   id        String   @id @default(uuid())
   data      Json
-  Form      Form     @relation(fields: [formId], references: [id])
+  Form      Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
   formId    String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
