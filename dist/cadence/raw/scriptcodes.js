@@ -1,16 +1,17 @@
-import { readFileSync } from "fs";
-import { join } from "path";
-export const read = (path: string): string => {
-  return readFileSync(join(__dirname, path), "utf8");
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.GET_FIND_PROFILE = exports.GET_NFT_IN_COLLECTION = exports.GET_DEPLOYED_CONTRACTS = exports.GET_ALL_COLLECTIONS_FROM_CATALOG = exports.read = void 0;
+const fs_1 = require("fs");
+const path_1 = require("path");
+const read = (path) => {
+    return (0, fs_1.readFileSync)((0, path_1.join)(__dirname, path), "utf8");
 };
-
+exports.read = read;
 //const GET_ALL_COLLECTIONS_FROM_CATALOG = read("./scripts/get_all_collections_from_catalog.cdc");
 //const GET_DEPLOYED_CONTRACTS = read("./scripts/get_deployed_contracts.cdc");
 //const GET_NFT_IN_COLLECTION = read("./scripts/get_nft_in_collection.cdc");
 //const GET_FIND_PROFILE = read("./scripts/get_find_profile.cdc");
-
-const GET_ALL_COLLECTIONS_FROM_CATALOG = 
-`
+const GET_ALL_COLLECTIONS_FROM_CATALOG = `
 import NFTCatalog from 0xNFTCatalog
 import MetadataViews from 0xMetadataViews
 
@@ -61,16 +62,16 @@ pub fun main(): [NFTCatalogMetadata] {
 
     return items
 }
-`
-const GET_DEPLOYED_CONTRACTS = 
-`
+`;
+exports.GET_ALL_COLLECTIONS_FROM_CATALOG = GET_ALL_COLLECTIONS_FROM_CATALOG;
+const GET_DEPLOYED_CONTRACTS = `
 pub fun main(address: Address): PublicAccount.Contracts {
   let account = getAccount(address)
   return account.contracts
 }
-`
-const GET_NFT_IN_COLLECTION = 
-`
+`;
+exports.GET_DEPLOYED_CONTRACTS = GET_DEPLOYED_CONTRACTS;
+const GET_NFT_IN_COLLECTION = `
 import NonFungibleToken from 0xNonFungibleToken
 import MetadataViews from 0xMetadataViews
 
@@ -120,9 +121,9 @@ pub fun main(address: Address, path: String): [NFTMetadata] {
 
     return data
 }
-`
-const GET_FIND_PROFILE = 
-`
+`;
+exports.GET_NFT_IN_COLLECTION = GET_NFT_IN_COLLECTION;
+const GET_FIND_PROFILE = `
 import Profile from 0xProfile
 import FIND from 0xFIND
 
@@ -158,10 +159,6 @@ pub fun main(address: Address) : Profile.UserReport? {
 	return profileReport
 }
  
-`
-export {
-    GET_ALL_COLLECTIONS_FROM_CATALOG,
-    GET_DEPLOYED_CONTRACTS,
-    GET_NFT_IN_COLLECTION,
-    GET_FIND_PROFILE
-};
+`;
+exports.GET_FIND_PROFILE = GET_FIND_PROFILE;
+//# sourceMappingURL=scriptcodes.js.map
