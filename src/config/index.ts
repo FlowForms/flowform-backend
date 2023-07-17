@@ -8,6 +8,9 @@ const config = () => {
   const environment = env.NODE_ENV; // dev | prod
   const googleClientID = env.GOOGLE_CLIENT_ID;
   const googleClientSecret = env.GOOGLE_CLIENT_SECRET;
+  const twitterClientID = env.TWITTER_CLIENT_ID;
+  const twitterClientSecret = env.TWITTER_CLIENT_SECRET;
+  const twitterCallbackURL = env.TWITTER_CALLBACK_URL;
   const frontendURL = env.FRONTEND_URL;
   const cookieSecret = env.COOKIE_SECRET;
 
@@ -37,10 +40,14 @@ const config = () => {
   const metadataViewsAddressTestnet = env.METADATA_VIEWS_ADDRESS_TESTNET;
   const nftCatalogAddressTestnet = env.NFT_CATALOG_ADDRESS_TESTNET;
   const nonFungibleTokenAddressTestnet = env.NON_FUNGIBLE_TOKEN_ADDRESS_TESTNET;
+  const findProfileTestnet = env.PROFILE_TESTNET
+  const findTestnet = env.FIND_TESTNET
 
   const metadataViewsAddressMainnet = env.METADATA_VIEWS_ADDRESS_MAINNET;
   const nftCatalogAddressMainnet = env.NFT_CATALOG_ADDRESS_MAINNET;
   const nonFungibleTokenAddressMainnet = env.NON_FUNGIBLE_TOKEN_ADDRESS_MAINNET;
+  const findProfileMainnet = env.PROFILE_MAINNET
+  const findMainnet = env.FIND_MAINNET
 
   return {
     // App
@@ -48,6 +55,9 @@ const config = () => {
     environment,
     googleClientID,
     googleClientSecret,
+    twitterClientID,
+    twitterClientSecret,
+    twitterCallbackURL,
     frontendURL,
     cookieSecret,
 
@@ -67,13 +77,17 @@ const config = () => {
     testnet: {
       nftCatalogAddress: nftCatalogAddressTestnet,
       metadataViewsAddress: metadataViewsAddressTestnet,
-      nonFungibleTokenAddress: nonFungibleTokenAddressTestnet
+      nonFungibleTokenAddress: nonFungibleTokenAddressTestnet,
+      findProfileAddress: findProfileTestnet,
+      findAddress: findTestnet
     }, 
 
     mainnet: {
       nftCatalogAddress: nftCatalogAddressMainnet,
       metadataViewsAddress: metadataViewsAddressMainnet,
-      nonFungibleTokenAddress: nonFungibleTokenAddressMainnet
+      nonFungibleTokenAddress: nonFungibleTokenAddressMainnet,
+      findProfileAddress: findProfileMainnet,
+      findAddress: findMainnet
     }
     
     // Contracts - Standard
