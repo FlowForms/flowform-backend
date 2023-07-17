@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { getAllCollectionsFromCatalog, getDeployedContracts, getNftInCollection } from '../cadence';
+import { getAllCollectionsFromCatalog, getDeployedContracts, getNftInCollection, getFindProfile } from '../cadence';
 
 const router = express.Router();
 
@@ -19,6 +19,13 @@ router.get('/getContracts', async function (req: Request, res: Response, next: a
     if(address == null) return res.status(200).send()
     const contracts = await getDeployedContracts(`${address}`)
     res.status(200).send(contracts.names)
+})
+
+router.get('/getFindProfile', async function (req: Request, res: Response, next: any) {
+    const address = req.query.address
+    if(address == null) return res.status(200).send()
+    const profile = await getFindProfile(`${address}`)
+    res.status(200).send(profile)
 })
 
 router.get('/getNfts', async function (req: Request, res: Response, next: any) {

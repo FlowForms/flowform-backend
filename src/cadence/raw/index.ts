@@ -11,6 +11,7 @@ export enum ScriptName {
   GET_ALL_COLLECTIONS_FROM_CATALOG = "GET_ALL_COLLECTIONS_FROM_CATALOG",
   GET_DEPLOYED_CONTRACTS = "GET_DEPLOYED_CONTRACTS",
   GET_NFT_IN_COLLECTION = "GET_NFT_IN_COLLECTION",
+  GET_FIND_PROFILE = "GET_FIND_PROFILE"
 }
 
 export const getTransaction = (name: TransactionName): string | ((path: string) => string) => {
@@ -38,13 +39,17 @@ export const getContractAddresses = () => {
   const testnetMap =  {
     NFTCatalog: config().testnet.nftCatalogAddress,
     MetadataViews: config().testnet.metadataViewsAddress,
-    NonFungibleToken: config().testnet.nonFungibleTokenAddress
+    NonFungibleToken: config().testnet.nonFungibleTokenAddress,
+    Profile: config().testnet.findProfileAddress,
+    FIND: config().testnet.findAddress
   };
 
   const mainnetMap = {
     NFTCatalog: config().mainnet.nftCatalogAddress,
     MetadataViews: config().mainnet.metadataViewsAddress,
-    NonFungibleToken: config().mainnet.nonFungibleTokenAddress
+    NonFungibleToken: config().mainnet.nonFungibleTokenAddress,
+    Profile: config().mainnet.findProfileAddress,
+    FIND: config().mainnet.findAddress
   };
 
   if (config().flowNetwork == "testnet") return testnetMap
