@@ -27,6 +27,10 @@ router.get('/view-form/:id', async (req: any, res: any, next: any) => {
     }
 })
 
+router.get('/', async (req: any, res: any, next: any) => {
+    return res.status(200).send("Running Flow Form Backend");
+})
+
 router.use('/script', scriptRoutes);
 router.use('/response', responseRoutes);
 

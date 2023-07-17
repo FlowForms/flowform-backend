@@ -25,7 +25,7 @@ import routes from './routes';
 
 // App Config
 const app = express();
-const port = process.env.NODE_PORT
+const port = process.env.PORT
 
 function setUpParsing(app: Express): void {
   app.use(bodyParser.json());
