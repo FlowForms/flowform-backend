@@ -57,7 +57,7 @@ fcl.config({
 const routes_1 = __importDefault(require("./routes"));
 // App Config
 const app = (0, express_1.default)();
-const port = process.env.NODE_PORT;
+const port = process.env.PORT;
 function setUpParsing(app) {
     app.use(body_parser_1.default.json());
     app.use(body_parser_1.default.urlencoded({ extended: true }));

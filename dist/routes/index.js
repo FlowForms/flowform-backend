@@ -38,6 +38,9 @@ router.get('/view-form/:id', (req, res, next) => __awaiter(void 0, void 0, void 
         return next(err);
     }
 }));
+router.get('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    return res.status(200).send("Running Flow Form Backend");
+}));
 router.use('/script', script_1.default);
 router.use('/response', response_1.default);
 exports.default = router;

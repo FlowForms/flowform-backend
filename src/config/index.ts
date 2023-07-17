@@ -4,7 +4,7 @@ const env = process.env;
 
 const config = () => {
   // App
-  const port = env.NODE_PORT;
+  const port = env.PORT;
   const environment = env.NODE_ENV; // dev | prod
   const googleClientID = env.GOOGLE_CLIENT_ID;
   const googleClientSecret = env.GOOGLE_CLIENT_SECRET;
