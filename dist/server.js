@@ -93,6 +93,7 @@ app.use(passport_1.default.session());
 app.use(routes_1.default);
 app.use(error_handler_1.default);
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log((0, config_1.default)().environment == 'prod');
     console.log(`Tales FLOW Backend PORT:${port}`);
 }));
 //# sourceMappingURL=server.js.map

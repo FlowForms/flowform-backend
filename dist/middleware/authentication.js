@@ -32,7 +32,7 @@ new passport_twitter_oauth2_1.Strategy({
     clientID: (0, config_1.default)().twitterClientID,
     clientSecret: (0, config_1.default)().twitterClientSecret,
     clientType: 'confidential',
-    callbackURL: '/responder-auth/twitter/callback',
+    callbackURL: (0, config_1.default)().twitterCallbackURL,
 }, 
 // <3> Verify callback
 (accessToken, refreshToken, profile, done) => {

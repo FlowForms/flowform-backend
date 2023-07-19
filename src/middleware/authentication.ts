@@ -24,7 +24,7 @@ passport.use(
       clientID: config().twitterClientID,
       clientSecret: config().twitterClientSecret,
       clientType: 'confidential',
-      callbackURL:  '/responder-auth/twitter/callback',
+      callbackURL:  config().twitterCallbackURL,
     },
     // <3> Verify callback
     (accessToken, refreshToken, profile, done) => {
