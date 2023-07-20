@@ -73,6 +73,7 @@ app.use(ErrorHandler)
 app.listen(port, async () => {
   console.log(config().environment == 'prod')
   console.log(`Tales FLOW Backend PORT:${port}`);
+  console.log("test new build")
 });
 
 

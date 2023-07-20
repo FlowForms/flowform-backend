@@ -8,6 +8,7 @@ const router = express.Router();
 router.post('/login/google', passport.authenticate('magic'));
 
 router.get('/user', checkAuthenticated, function (req: any, res: any) {
+  console.log("req.user", req.user)
   return res.status(200).send(req.user);
 });
 
