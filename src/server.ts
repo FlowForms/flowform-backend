@@ -75,7 +75,7 @@ app.use(ErrorHandler)
 
 app.listen(port, async () => {
   console.log(config().environment == 'prod',  ".up.railway.app", (config().environment == 'prod') ?  'none' : 'lax')
-  console.log(`Tales FLOW Backend PORT:${port}`, "Set Key 1");
+  console.log(`Tales FLOW Backend PORT:${port}`, "Set Key 3");
 });
 
 
