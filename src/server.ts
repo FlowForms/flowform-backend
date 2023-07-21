@@ -60,7 +60,8 @@ app.use(cookieSession({
   maxAge: 24*60*60*1000,
   keys:[config().cookieSecret],
   sameSite: (config().environment == 'prod') ?  'none' : 'lax',
-  secure: config().environment == 'prod'
+  secure: config().environment == 'prod',
+  domain: ".railway.app"
 }))
 
 app.use(passport.initialize())
@@ -71,7 +72,7 @@ app.use(routes);
 app.use(ErrorHandler)
 
 app.listen(port, async () => {
-  console.log(config().environment == 'prod')
+  console.log(config().environment == 'prod',  ".railway.app", (config().environment == 'prod') ?  'none' : 'lax')
   console.log(`Tales FLOW Backend PORT:${port}`);
 });
 
