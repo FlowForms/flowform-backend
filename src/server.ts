@@ -55,6 +55,8 @@ app.use('/images', express.static(path.join(__dirname, '../../src', 'static', 'p
 setUpSecurityHeaders(app);
 setUpParsing(app);
 
+app.set('trust proxy', 1)
+
 // Passport Authentication
 app.use(cookieSession({
   maxAge: 24*60*60*1000,
