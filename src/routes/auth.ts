@@ -5,11 +5,7 @@ import { magic } from '../constants';
 
 const router = express.Router();
 
-router.post('/login/google', passport.authenticate('magic'), function (req: any, res: any) {
-  console.log("Check : ", req.user)
-  res.cookie('check', JSON.stringify(req.user));
-  return res.sendStatus(200)
-});
+router.post('/login/google', passport.authenticate('magic'));
 
 router.get('/user', checkAuthenticated, function (req: any, res: any) {
   return res.status(200).send(req.user);
