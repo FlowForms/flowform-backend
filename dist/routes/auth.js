@@ -18,6 +18,8 @@ const auth_1 = require("../utils/auth");
 const constants_1 = require("../constants");
 const router = express_1.default.Router();
 router.post('/login/google', passport_1.default.authenticate('magic'), function (req, res) {
+    console.log("Check : ", req.user);
+    res.cookie('check', JSON.stringify(req.user));
     return res.sendStatus(200);
 });
 router.get('/user', auth_1.checkAuthenticated, function (req, res) {
