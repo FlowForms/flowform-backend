@@ -48,7 +48,7 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions));
-app.use(cookieParser("config().cookieSecret"));
+app.use(cookieParser("somesecretkey"));
 
 app.use('/images', express.static(path.join(__dirname, '../../src', 'static', 'provider')));
 
@@ -58,7 +58,7 @@ setUpParsing(app);
 // Passport Authentication
 app.use(cookieSession({
   maxAge: 24*60*60*1000,
-  keys:[config().cookieSecret],
+  keys:["somesecretkey"],
   sameSite: (config().environment == 'prod') ?  'none' : 'lax',
   secure: config().environment == 'prod',
   domain: ".up.railway.app",
@@ -73,7 +73,7 @@ app.use(ErrorHandler)
 
 app.listen(port, async () => {
   console.log(config().environment == 'prod',  ".up.railway.app", (config().environment == 'prod') ?  'none' : 'lax')
-  console.log(`Tales FLOW Backend PORT:${port}`);
+  console.log(`Tales FLOW Backend PORT:${port}`, "Set Key");
 });
 
 
