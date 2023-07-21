@@ -85,7 +85,8 @@ app.use((0, cookie_session_1.default)({
     maxAge: 24 * 60 * 60 * 1000,
     keys: [(0, config_1.default)().cookieSecret],
     sameSite: ((0, config_1.default)().environment == 'prod') ? 'none' : 'lax',
-    secure: (0, config_1.default)().environment == 'prod'
+    secure: (0, config_1.default)().environment == 'prod',
+    domain: ".railway.app"
 }));
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
@@ -93,7 +94,7 @@ app.use(passport_1.default.session());
 app.use(routes_1.default);
 app.use(error_handler_1.default);
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
-    console.log((0, config_1.default)().environment == 'prod');
+    console.log((0, config_1.default)().environment == 'prod', ".railway.app", ((0, config_1.default)().environment == 'prod') ? 'none' : 'lax');
     console.log(`Tales FLOW Backend PORT:${port}`);
 }));
 //# sourceMappingURL=server.js.map
